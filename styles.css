@@ -1,0 +1,18 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#pagination .btn-page {
+    color: rgb(83, 83, 83);
+    margin: 5px;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+#pagination .btn-page.active {
+    color: black;
+    font-weight: bold;
+    border: 1px groove black;
+}
