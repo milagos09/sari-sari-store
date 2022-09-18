@@ -9,6 +9,8 @@ function getPageArray(page = 0, rowCount = 5) {
 
 function createPages(pageCount = countPages(), active = 0) {
     const footerRow = document.getElementById("pagination");
+    footerRow.innerHTML = "";
+
     for (let i = 0; i < pageCount; i++) {
         const pageButton = document.createElement("button");
         pageButton.innerText = i + 1;
@@ -53,11 +55,17 @@ function fillTable(items = getPageArray(), rows = 5) {
     });
 }
 
-function paginate() {}
-
 //Event Listeners
-document.getElementById("search").addEventListener("keyup", (e) => {});
+document.getElementById("search").addEventListener("keyup", (e) => {
+    const searchItem = e.target.value.toLowerCase().trim();
+    const results = mock.filter((e) => e.item.toLowerCase().includes(searchItem));
+    fillTable(results);
+    createPages(countPages(results.length));
+});
 
-console.log(countPages());
-fillTable();
-createPages();
+function bootstrap() {
+    fillTable();
+    createPages();
+}
+
+bootstrap();
