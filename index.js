@@ -46,11 +46,22 @@ function fillTable(items = getPageArray(), rows = 5) {
         const tr = document.createElement("tr");
         const tdItem = document.createElement("td");
         const tdPrice = document.createElement("td");
+        const tdImage = document.createElement("td");
+        const tdAction = document.createElement("td");
+        const img = document.createElement("img");
+        const btnDelete = document.createElement("button");
+        const btnEdit = document.createElement("button");
 
         tdItem.textContent = e.item;
         tdPrice.textContent = "P" + e.price.toFixed(2);
+        img.src = "https://via.placeholder.com/150";
+        tdImage.appendChild(img);
 
-        tr.append(tdItem, tdPrice);
+        btnDelete.innerHTML = '<i class="bi bi-trash"></i>';
+        btnEdit.innerHTML = '<i class="bi bi-pencil-square"></i>';
+        tdAction.append(btnDelete, btnEdit);
+
+        tr.append(tdImage, tdItem, tdPrice, tdAction);
         itemsTable.append(tr);
     });
 }

@@ -10,6 +10,7 @@ const mock = [
     { item: "Oishi Spicy Large", price: 20, tags: "foods" },
     { item: "Oishi Spicy Small", price: 10, tags: "foods" },
     { item: "Oishi Bread Pan Small", price: 15, tags: "foods" },
+    { item: "Zishi Bread Pan Small", price: 15, tags: "foods" },
 ].sort((a, b) => {
     let fa = a.item.toLowerCase(),
         fb = b.item.toLowerCase();

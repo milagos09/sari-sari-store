@@ -9,10 +9,23 @@ body {
     margin: 5px;
     padding: 5px 10px;
     border-radius: 5px;
+    background: none;
 }
 
 #pagination .btn-page.active {
     color: black;
     font-weight: bold;
     border: 1px groove black;
+}
+
+th {
+    font-size: larger;
+}
+
+td {
+    vertical-align: middle;
+}
+
+tbody button {
+    margin: 0 5px;
 }
