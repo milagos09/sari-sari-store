@@ -16,7 +16,7 @@
             <div class="input-group my-3">
                 <span class="input-group-text">Search: </span>
                 <input id="search" type="text" class="form-control" placeholder="Item Name" />
-                <button class="mx-4">Add Item</button>
+                <button class="mx-4" id="modal-btn-open">New Item</button>
             </div>
             <table class="table table-hover table-responsive text-center">
                 <thead>
@@ -35,6 +35,21 @@
                 </tfoot>
             </table>
         </main>
+        <dialog id="modal-add">
+            <h4>New Item</h4>
+            <form>
+                <label>Item: </label>
+                <input type="text" id="item-name" required />
+                <label>Price: </label>
+                <input type="text" id="item-price" required />
+                <label>Tags: </label>
+                <input type="text" id="item-tags" />
+                <label>Image: </label>
+                <input type="text" id="item-img" placeholder="optional" />
+                <button type="button" id="modal-btn-close">Cancel</button>
+                <button id="modal-btn-submit">Submit</button>
+            </form>
+        </dialog>
     </body>
     <script src="./mock.js"></script>
     <script src="./index.js"></script>

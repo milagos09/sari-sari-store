@@ -3,7 +3,7 @@ function countPages(totalRows = mock.length, rowsPerPage = 5) {
 }
 
 function getPageArray(page = 0, rowCount = 5) {
-    const currentPage = mock.slice(page * rowCount, rowCount + page * rowCount);
+    const currentPage = currentResults.slice(page * rowCount, rowCount + page * rowCount);
     return currentPage;
 }
 
@@ -39,7 +39,7 @@ function createPages(pageCount = countPages(), active = 0) {
     }
 }
 
-function fillTable(items = getPageArray(), rows = 5) {
+function fillTable(items = getPageArray()) {
     const itemsTable = document.getElementById("items-table");
     itemsTable.innerHTML = "";
     items.forEach((e, i) => {
@@ -66,12 +66,33 @@ function fillTable(items = getPageArray(), rows = 5) {
     });
 }
 
-//Event Listeners
-document.getElementById("search").addEventListener("keyup", (e) => {
+//Event Listeners and global variables
+let currentResults = mock;
+const search = document.getElementById("search");
+const modal = document.getElementById("modal-add");
+const closeModal = document.getElementById("modal-btn-close");
+const openModal = document.getElementById("modal-btn-open");
+const submit = document.getElementById("modal-btn-submit");
+
+search.addEventListener("keyup", (e) => {
     const searchItem = e.target.value.toLowerCase().trim();
-    const results = mock.filter((e) => e.item.toLowerCase().includes(searchItem));
-    fillTable(results);
-    createPages(countPages(results.length));
+
+    if (searchItem === "") {
+        currentResults = mock;
+        bootstrap();
+        return;
+    }
+    currentResults = mock.filter((e) => e.item.toLowerCase().includes(searchItem));
+    fillTable(currentResults);
+    createPages(countPages(currentResults.length));
+});
+
+openModal.addEventListener("click", () => {
+    modal.showModal();
+});
+
+closeModal.addEventListener("click", () => {
+    modal.close();
 });
 
 function bootstrap() {
