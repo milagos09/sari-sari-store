@@ -11,15 +11,4 @@ const mock = [
     { item: "Oishi Spicy Small", price: 10, tags: "foods" },
     { item: "Oishi Bread Pan Small", price: 15, tags: "foods" },
     { item: "Zishi Bread Pan Small", price: 15, tags: "foods" },
-].sort((a, b) => {
-    let fa = a.item.toLowerCase(),
-        fb = b.item.toLowerCase();
-
-    if (fa < fb) {
-        return -1;
-    }
-    if (fa > fb) {
-        return 1;
-    }
-    return 0;
-});
+];

@@ -42,16 +42,17 @@
                 <label>Item: </label>
                 <input type="text" id="item-name" required placeholder="Item Name" />
                 <label>Price: </label>
-                <input type="number" id="item-price" required placeholder="0.00" />
+                <input type="number" min="0" id="item-price" required placeholder="0.00" />
                 <label>Tags: </label>
                 <input type="text" id="item-tags" placeholder="separate by space" />
                 <label>Image: </label>
                 <input type="text" id="item-img" placeholder="optional" />
                 <button type="button" id="modal-btn-close">Cancel</button>
-                <button id="modal-btn-submit">Submit</button>
+                <button id="modal-btn-submit" type="button">Submit</button>
             </form>
         </dialog>
     </body>
     <script src="./mock.js"></script>
-    <script src="./index.js"></script>
+    <script src="./display.js"></script>
+    <script src="./db.js"></script>
 </html>

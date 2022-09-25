@@ -104,8 +104,28 @@ closeModal.addEventListener("click", () => {
     modal.close();
 });
 
+submit.addEventListener("click", () => {
+    if (db.submit()) {
+        loadDefault();
+        modal.close();
+    }
+});
+
 function loadDefault() {
-    currentResults = mock;
+    clear.style.display = "none";
+    /* Sorting the mock data alphabetically. */
+    currentResults = mock.sort((a, b) => {
+        let fa = a.item.toLowerCase(),
+            fb = b.item.toLowerCase();
+
+        if (fa < fb) {
+            return -1;
+        }
+        if (fa > fb) {
+            return 1;
+        }
+        return 0;
+    });
     fillTable();
     createPages();
 }
