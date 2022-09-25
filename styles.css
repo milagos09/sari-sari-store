@@ -8,14 +8,13 @@ body {
     color: rgb(83, 83, 83);
     margin: 5px;
     padding: 5px 10px;
-    border-radius: 5px;
     background: none;
 }
 
 #pagination .btn-page.active {
     color: black;
     font-weight: bold;
-    border: 1px groove black;
+    border: double 2px black;
 }
 
 th {
@@ -46,13 +45,21 @@ form label {
 
 form input {
     width: 100%;
-    padding: 5px 10px;
+    padding: 7px 10px;
+    border-radius: 5px;
+    border: 1px solid gray;
 }
 
 #modal-add button {
-    margin: 30px 15px 10px;
+    margin: 30px 12px 10px;
+    padding: 2px 15px;
+    border-radius: 5px;
 }
 
 dialog::backdrop {
     background-color: rgba(0, 0, 0, 0.75);
+}
+
+button:active {
+    border: double 2px black;
 }
