@@ -54,7 +54,7 @@ function fillTable(items = getPageArray()) {
 
         tdItem.textContent = e.item;
         tdPrice.textContent = "P" + e.price.toFixed(2);
-        img.src = "https://via.placeholder.com/150";
+        img.src = "https://via.placeholder.com/125";
         tdImage.appendChild(img);
 
         btnDelete.innerHTML = '<i class="bi bi-trash"></i>';
@@ -69,6 +69,7 @@ function fillTable(items = getPageArray()) {
 //Event Listeners and global variables
 let currentResults = mock;
 const search = document.getElementById("search");
+const clear = document.getElementById("clear");
 const modal = document.getElementById("modal-add");
 const closeModal = document.getElementById("modal-btn-close");
 const openModal = document.getElementById("modal-btn-open");
@@ -77,14 +78,22 @@ const submit = document.getElementById("modal-btn-submit");
 search.addEventListener("keyup", (e) => {
     const searchItem = e.target.value.toLowerCase().trim();
 
+    searchItem == "" ? (clear.style.display = "none") : (clear.style.display = "inline");
+
     if (searchItem === "") {
         currentResults = mock;
-        bootstrap();
+        clear.style.display = "none";
+        loadDefault();
         return;
     }
     currentResults = mock.filter((e) => e.item.toLowerCase().includes(searchItem));
-    fillTable(currentResults);
+    fillTable(getPageArray());
     createPages(countPages(currentResults.length));
+});
+
+clear.addEventListener("click", () => {
+    search.value = "";
+    loadDefault();
 });
 
 openModal.addEventListener("click", () => {
@@ -95,9 +104,10 @@ closeModal.addEventListener("click", () => {
     modal.close();
 });
 
-function bootstrap() {
+function loadDefault() {
+    currentResults = mock;
     fillTable();
     createPages();
 }
 
-bootstrap();
+loadDefault();

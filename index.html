@@ -13,10 +13,11 @@
     </head>
     <body>
         <main class="container">
-            <div class="input-group my-3">
-                <span class="input-group-text">Search: </span>
-                <input id="search" type="text" class="form-control" placeholder="Item Name" />
-                <button class="mx-4" id="modal-btn-open">New Item</button>
+            <div class="search text-center">
+                <label>SEARCH</label>
+                <input id="search" type="text" class="" placeholder="Item Name" value="" />
+                <button id="clear"><i class="bi bi-arrow-counterclockwise"></i></button>
+                <button id="modal-btn-open">New Item</button>
             </div>
             <table class="table table-hover table-responsive text-center">
                 <thead>
@@ -39,11 +40,11 @@
             <h4>New Item</h4>
             <form>
                 <label>Item: </label>
-                <input type="text" id="item-name" required />
+                <input type="text" id="item-name" required placeholder="Item Name" />
                 <label>Price: </label>
-                <input type="text" id="item-price" required />
+                <input type="number" id="item-price" required placeholder="0.00" />
                 <label>Tags: </label>
-                <input type="text" id="item-tags" />
+                <input type="text" id="item-tags" placeholder="separate by space" />
                 <label>Image: </label>
                 <input type="text" id="item-img" placeholder="optional" />
                 <button type="button" id="modal-btn-close">Cancel</button>

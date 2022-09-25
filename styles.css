@@ -4,6 +4,32 @@ body {
     box-sizing: border-box;
 }
 
+button {
+    padding: 2px 15px;
+    border-radius: 10px;
+}
+
+button:active {
+    border: double 2px black;
+}
+
+.search {
+    margin: 20px;
+    font-weight: bold;
+}
+
+#clear {
+    display: none;
+}
+
+#search {
+    width: 50%;
+    padding: 7px 10px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    margin: 5px 10px;
+}
+
 #pagination .btn-page {
     color: rgb(83, 83, 83);
     margin: 5px;
@@ -14,7 +40,7 @@ body {
 #pagination .btn-page.active {
     color: black;
     font-weight: bold;
-    border: double 2px black;
+    border: solid 2px black;
 }
 
 th {
@@ -26,8 +52,9 @@ td {
 }
 
 tbody button {
-    margin: 0 5px;
+    margin: 4px;
 }
+
 #modal-add {
     text-align: center;
     width: 66%;
@@ -37,10 +64,14 @@ tbody button {
     border-radius: 10px;
 }
 
+#modal-add button {
+    margin: 20px 10px;
+}
+
 form label {
     text-align: start;
     display: block;
-    margin: 15px 0;
+    margin: 11px 0;
 }
 
 form input {
@@ -50,16 +81,6 @@ form input {
     border: 1px solid gray;
 }
 
-#modal-add button {
-    margin: 30px 12px 10px;
-    padding: 2px 15px;
-    border-radius: 5px;
-}
-
 dialog::backdrop {
     background-color: rgba(0, 0, 0, 0.75);
-}
-
-button:active {
-    border: double 2px black;
 }
