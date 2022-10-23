@@ -1,4 +1,4 @@
-function countPages(totalRows = mock.length, rowsPerPage = 5) {
+function countPages(totalRows = currentResults.length, rowsPerPage = 5) {
     return Math.ceil(totalRows / rowsPerPage);
 }
 
@@ -39,6 +39,10 @@ function createPages(pageCount = countPages(), active = 0) {
     }
 }
 
+/**
+ * It creates a table row for each item in the array, and adds it to the table
+ * @param [items] - the array of items to be displayed in the table
+ */
 function fillTable(items = getPageArray()) {
     const itemsTable = document.getElementById("items-table");
     itemsTable.innerHTML = "";
@@ -57,8 +61,16 @@ function fillTable(items = getPageArray()) {
         img.src = "https://via.placeholder.com/125";
         tdImage.appendChild(img);
 
+        tr.id = e.id;
         btnDelete.innerHTML = '<i class="bi bi-trash"></i>';
+        btnDelete.className = "delete";
+        btnDelete.addEventListener("click", async () => {
+            await db.delete(e.id, e.item);
+        });
+
         btnEdit.innerHTML = '<i class="bi bi-pencil-square"></i>';
+        btnEdit.className = "edit";
+
         tdAction.append(btnDelete, btnEdit);
 
         tr.append(tdImage, tdItem, tdPrice, tdAction);
@@ -67,7 +79,7 @@ function fillTable(items = getPageArray()) {
 }
 
 //Event Listeners and global variables
-let currentResults = mock;
+let currentResults = [];
 const search = document.getElementById("search");
 const clear = document.getElementById("clear");
 const modal = document.getElementById("modal-add");
@@ -75,18 +87,20 @@ const closeModal = document.getElementById("modal-btn-close");
 const openModal = document.getElementById("modal-btn-open");
 const submit = document.getElementById("modal-btn-submit");
 
-search.addEventListener("keyup", (e) => {
+search.addEventListener("keyup", async (e) => {
     const searchItem = e.target.value.toLowerCase().trim();
 
     searchItem == "" ? (clear.style.display = "none") : (clear.style.display = "inline");
 
     if (searchItem === "") {
-        currentResults = mock;
+        currentResults = JSON.parse(sessionStorage.getItem("items"));
         clear.style.display = "none";
         loadDefault();
         return;
     }
-    currentResults = mock.filter((e) => e.item.toLowerCase().includes(searchItem));
+    currentResults = JSON.parse(sessionStorage.getItem("items")).filter((e) =>
+        e.item.toLowerCase().includes(searchItem)
+    );
     fillTable(getPageArray());
     createPages(countPages(currentResults.length));
 });
@@ -111,10 +125,11 @@ submit.addEventListener("click", () => {
     }
 });
 
-function loadDefault() {
+async function loadDefault() {
     clear.style.display = "none";
-    /* Sorting the mock data alphabetically. */
-    currentResults = mock.sort((a, b) => {
+    /* Sorting the items alphabetically. */
+    const items = await db.getAllItems();
+    currentResults = items.sort((a, b) => {
         let fa = a.item.toLowerCase(),
             fb = b.item.toLowerCase();
 

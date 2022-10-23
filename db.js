@@ -1,10 +1,34 @@
 class db {
-    static submit() {
-        if (this.getInput()) {
-            const newItem = this.getInput();
-            mock.push({ item: newItem.name, price: newItem.price, tags: newItem.tags });
+    static async getAllItems() {
+        const response = await fetch("https://sari-sari-store-backend-dv13.vercel.app/products/getallitems", {
+            method: "GET",
+        });
+        const data = await response.json();
+        sessionStorage.setItem("items", JSON.stringify(data));
+        return data;
+    }
+
+    static async submit() {
+        const newItem = this.getInput();
+        if (newItem) {
+            const myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+            const requestOptions = {
+                method: "POST",
+                headers: myHeaders,
+                body: JSON.stringify(newItem),
+                redirect: "follow",
+            };
+
+            const response = await fetch(
+                "https://sari-sari-store-backend-dv13.vercel.app/products/add",
+                requestOptions
+            );
+            const data = await response.status;
+
             this.reset();
-            alert(`"${newItem.name}" has been added successfully`);
+            await loadDefault();
             return true;
         }
         alert("cannot submit new item");
@@ -17,23 +41,37 @@ class db {
      */
     static getInput() {
         const newItem = {
-            name: this.itemName.value,
+            item: this.itemName.value,
             price: Number(this.itemPrice.value),
             tags: this.itemTags.value,
-            img: this.itemImg.value,
+            image: this.itemImg.value,
         };
 
-        if (!(newItem.name || newItem.price)) {
+        if (!(newItem.item || newItem.price)) {
             return false;
         }
 
         /* Capitalizing the first letter of each word in the name. */
-        newItem.name = newItem.name
+        newItem.item = newItem.item
             .split(" ")
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
             .join(" ");
 
         return newItem;
+    }
+
+    static async delete(id, name) {
+        const requestOptions = {
+            method: "DELETE",
+        };
+
+        const response = await fetch(
+            "https://sari-sari-store-backend-dv13.vercel.app/products/delete/" + id,
+            requestOptions
+        );
+
+        await loadDefault();
+        alert("successfully deleted: " + name);
     }
 
     static reset() {
