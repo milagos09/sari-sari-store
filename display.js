@@ -70,6 +70,16 @@ function fillTable(items = getPageArray()) {
 
         btnEdit.innerHTML = '<i class="bi bi-pencil-square"></i>';
         btnEdit.className = "edit";
+        btnEdit.addEventListener("click", () => {
+            db.itemName.value = e.item;
+            db.itemPrice.value = e.price;
+            db.itemImg.value = e.image;
+            db.itemTags.value = e.tags;
+            modalTitle.innerText = "Edit Item";
+            form.id = e.id;
+
+            modal.showModal();
+        });
 
         tdAction.append(btnDelete, btnEdit);
 
@@ -82,10 +92,12 @@ function fillTable(items = getPageArray()) {
 let currentResults = [];
 const search = document.getElementById("search");
 const clear = document.getElementById("clear");
-const modal = document.getElementById("modal-add");
+const modal = document.getElementById("modal-form");
 const closeModal = document.getElementById("modal-btn-close");
 const openModal = document.getElementById("modal-btn-open");
+const modalTitle = document.getElementById("modal-title");
 const submit = document.getElementById("modal-btn-submit");
+const form = document.querySelector("form");
 
 search.addEventListener("keyup", async (e) => {
     const searchItem = e.target.value.toLowerCase().trim();
@@ -111,6 +123,7 @@ clear.addEventListener("click", () => {
 });
 
 openModal.addEventListener("click", () => {
+    modalTitle.innerText = "New Item";
     modal.showModal();
 });
 
@@ -124,6 +137,18 @@ submit.addEventListener("click", () => {
         modal.close();
     }
 });
+
+function loading(status = true) {
+    const spinner = document.getElementById("loader");
+    const main = document.querySelector("main");
+    if (status) {
+        spinner.style.display = "block";
+        main.style.opacity = 0.5;
+    } else {
+        spinner.style.display = "none";
+        main.style.opacity = 1;
+    }
+}
 
 async function loadDefault() {
     clear.style.display = "none";

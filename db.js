@@ -1,16 +1,20 @@
 class db {
     static async getAllItems() {
+        loading();
         const response = await fetch("https://sari-sari-store-backend-dv13.vercel.app/products/getallitems", {
             method: "GET",
         });
         const data = await response.json();
         sessionStorage.setItem("items", JSON.stringify(data));
+        loading(false);
         return data;
     }
 
     static async submit() {
+        loading();
         const newItem = this.getInput();
-        if (newItem) {
+
+        if (newItem && modalTitle.innerText === "New Item") {
             const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
 
@@ -25,14 +29,32 @@ class db {
                 "https://sari-sari-store-backend-dv13.vercel.app/products/add",
                 requestOptions
             );
-            const data = await response.status;
 
             this.reset();
             await loadDefault();
-            return true;
+            loading(false);
+            return response.status == 200 ? alert("successfully added new item") : alert("cannot submit new item");
+        } else {
+            const myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+            const requestOptions = {
+                method: "PUT",
+                headers: myHeaders,
+                body: JSON.stringify(newItem),
+                redirect: "follow",
+            };
+
+            const response = await fetch(
+                "https://sari-sari-store-backend-dv13.vercel.app/products/edit/" + form.id,
+                requestOptions
+            );
+
+            this.reset();
+            await loadDefault(false);
+            loading(false);
+            return response.status == 200 ? alert("successfully edited item") : alert("cannot edit item");
         }
-        alert("cannot submit new item");
-        return false;
     }
 
     /**
@@ -61,6 +83,7 @@ class db {
     }
 
     static async delete(id, name) {
+        loading();
         const requestOptions = {
             method: "DELETE",
         };
@@ -71,6 +94,7 @@ class db {
         );
 
         await loadDefault();
+        loading(false);
         alert("successfully deleted: " + name);
     }
 
